@@ -20,10 +20,20 @@ const postModelSchema = mongoose.Schema({
         type: Array,
         required: false
     },
-    comments: {
-        type: Array,
-        required: false
-    },
+    comments: [{
+        userName:{
+            type: String,
+            required: false
+        },
+        message:{
+            type: String,
+            required: false
+        },
+        image:{
+            type: String,
+            required: false
+        }
+    }],
     thumbnail:{
         type: String,
         required: false

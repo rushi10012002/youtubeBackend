@@ -1,7 +1,7 @@
 const express=require('express');
 const multer=require("multer");
 const fs=require('fs');
-const { createPost, getAllPost, getAllPostByFilter, getAllFilters } = require('../controller/post');
+const { createPost, getAllPost, getAllPostByFilter, getAllFilters, createComments, getAllComments } = require('../controller/post');
 const router=express.Router();
 
 
@@ -49,4 +49,11 @@ router.post("/filter",getAllPostByFilter);
 
 // get all filters
 router.get("/filterList",getAllFilters);
+
+// comment api by id
+router.post("/comments",createComments);
+
+//  get all comments by Post ID
+router.post("/getComments",getAllComments);
+
 module.exports=router;

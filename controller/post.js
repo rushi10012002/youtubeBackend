@@ -1,6 +1,6 @@
 const postModel=require("../model/post");
 const postTypeModel=require("../model/postType");
-
+const mongoose=require('mongoose')
 exports.createPost=async(req,res)=>{
 try {
     console.log(req.body);
@@ -111,6 +111,62 @@ exports.getAllFilters=async(req,res)=>{
             data:null,
             code:"0000",
             systemIssue:error,
+            message:"service is down"
+        })
+    }
+
+}
+exports.createComments=async(req,res)=>{
+    try {
+        console.log(req.body);
+        const result= await postModel.updateOne({_id:req.body.id},{
+            $push:{comments:req.body.items}
+        }) 
+        console.log(result);
+        if (!result) {
+            return res.json({
+             data:null,
+             code:"0000",
+             message:"something went worng please check in post service"
+            }) 
+         }
+        return res.json({
+            data:result,
+            code:"1111",
+            message:"comment added successfully"
+        })
+    } catch (error) {
+        return res.json({
+            data:null,
+            code:"0000",
+            systemIssue:error.message,
+            message:"service is down"
+        })
+    }
+
+}
+exports.getAllComments=async(req,res)=>{
+    try {
+        console.log(req.body);
+        const result= await postModel.find({_id:req.body.id}).select("comments") 
+        console.log(result);
+        if (!result) {
+            return res.json({
+             data:null,
+             code:"0000",
+             message:"something went worng please check in post service"
+            }) 
+         }
+        return res.json({
+            data:result[0],
+            code:"1111",
+            message:"get all comment successfully"
+        })
+    } catch (error) {
+        return res.json({
+            data:null,
+            code:"0000",
+            systemIssue:error.message,
             message:"service is down"
         })
     }
